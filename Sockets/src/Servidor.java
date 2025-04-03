@@ -24,10 +24,16 @@ public class Servidor {
 
     public void repDades() {
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            String message = reader.readLine();
-            System.out.println("Mensaje recibido: " + message);
-            reader.close();
+            while (true) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                String message = reader.readLine();
+                if (message == null || message.equalsIgnoreCase("chao")) {
+                    System.out.println("Cliente desconectado.");
+                    reader.close();
+                    break;
+                }
+                System.out.println("Mensaje recibido: " + message);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
